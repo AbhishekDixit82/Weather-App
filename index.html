@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6dd5fa, #2980b9);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .search-box input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #4a90e2;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .weather-card, .forecast-card {
+            background: #f8f8f8;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .forecast {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+            white-space: nowrap;
+        }
+
+        .forecast-item {
+            min-width: 100px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .forecast::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .forecast::-webkit-scrollbar-thumb {
+            background: #4a90e2;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-box">
+            <h1>Weather Search</h1>
+            <form method="post">
+                <input type="text" name="city" placeholder="Enter city name" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        {% if weather %}
+        <div class="weather-card">
+            <h2>Current Weather</h2>
+            <h3>{{ weather.city }}</h3>
+            <p>{{ weather.local_time }}</p>
+            <h1>{{ weather.temperature }}°C</h1>
+            <p>{{ weather.weather }}</p>
+        </div>
+
+        <div class="forecast-card">
+            <h2>5-Day Forecast</h2>
+            <div class="forecast">
+                {% for forecast in forecast %}
+                <div class="forecast-item">
+                    <p>{{ forecast.time }}</p>
+                    <p><strong>{{ forecast.temperature }}°C</strong></p>
+                    <p>{{ forecast.weather }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
